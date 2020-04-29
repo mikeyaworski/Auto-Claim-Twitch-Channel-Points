@@ -4,3 +4,4 @@ Simple Chrome Extension / Firefox Addon to auto click the button which claims Tw
 ![](/screenshot.png)
 
 Chrome Extension: https://chrome.google.com/webstore/detail/jfkamlikjbpcgjcdicpjaofammhfgjjh
+Firefox Addon: https://addons.mozilla.org/en-US/firefox/addon/auto-claim-twitch-chnnl-points

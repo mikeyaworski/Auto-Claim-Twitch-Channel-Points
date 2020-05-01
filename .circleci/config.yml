@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: "Install Dependencies"
-          command: npm i -g web-ext
+          command: sudo npm i -g web-ext
       - run:
           name: "Package Extension"
           command: git archive -o package.zip HEAD:src

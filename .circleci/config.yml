@@ -27,5 +27,5 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd src
-              web-ext sign --id="${FF_APP_ID}" --api-key="${FF_JWT_ISSUER}" --api-secret="${FF_JWT_SECRET}"
+              web-ext sign --id="${FF_APP_ID}" --api-key="${FF_JWT_ISSUER}" --api-secret="${FF_JWT_SECRET}" || true
             fi

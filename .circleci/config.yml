@@ -24,6 +24,8 @@ jobs:
             fi
       - run:
           name: "Sign & Upload Firefox Addon"
+          # || true so that even when the signing fails for listed addons, the build will not fail
+          # (signing will always fail since the addon will always be pending review)
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd src

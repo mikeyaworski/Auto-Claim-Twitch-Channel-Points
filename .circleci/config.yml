@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:12.14.1
     environment:
       - CHROME_APP_ID: jfkamlikjbpcgjcdicpjaofammhfgjjh
-      - FF_APP_ID: '{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}'
+      - FF_APP_ID: "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}"
     steps:
       - checkout
       - run:
@@ -15,7 +15,7 @@ jobs:
           name: "Package Extension"
           command: git archive -o package.zip HEAD:src
       - run:
-          name: "Upload & Publish extension to the Google Chrome Store"
+          name: "Upload & Publish Chrome Extension"
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ACCESS_TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d "client_id=${CHROME_CLIENT_ID}&client_secret=${CHROME_CLIENT_SECRET}&refresh_token=${CHROME_REFRESH_TOKEN}&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob" | jq -r .access_token)

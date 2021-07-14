@@ -3,7 +3,7 @@ on:
   push:
     branches: [master]
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     env:
       CHROME_APP_ID: jfkamlikjbpcgjcdicpjaofammhfgjjh

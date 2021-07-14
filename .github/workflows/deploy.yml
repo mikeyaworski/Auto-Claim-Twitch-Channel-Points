@@ -1,0 +1,39 @@
+name: Deploy
+on:
+  push:
+    branches: [master]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      CHROME_APP_ID: jfkamlikjbpcgjcdicpjaofammhfgjjh
+      FF_APP_ID: "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}"
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+        cache: npm
+#     - run: sudo npm i -g web-ext
+    - run: git archive -o package.zip HEAD:src
+    - uses: trmcnvn/chrome-addon@v2
+      with:
+        extension: ${{ env.CHROME_APP_ID }}
+        zip: package.zip
+        client-id: ${{ secrets.CHROME_CLIENT_ID }}
+        client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+        refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+    - uses: trmcnvn/firefox-addon@v1
+      with:
+        uuid: "${{ env.FF_APP_ID }}"
+        xpi: package.zip
+        manifest: src/manifest.json
+        api-key: ${{ secrets.FF_JWT_ISSUER }}
+        api-secret: ${{ secrets.FF_JWT_SECRET }}
+#     - run: |
+#         ACCESS_TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d "client_id=${{secrets.CHROME_CLIENT_ID}}&client_secret=${{secrets.CHROME_CLIENT_SECRET}}&refresh_token=${{secrets.CHROME_REFRESH_TOKEN}}&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob" | jq -r .access_token)
+#         curl -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T package.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${{env.CHROME_APP_ID}}"
+#         curl -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST -v "https://www.googleapis.com/chromewebstore/v1.1/items/${{env.CHROME_APP_ID}}/publish"
+#     - run: |
+#         cd src
+#         web-ext sign --id="${{env.FF_APP_ID}}" --api-key="${{secrets.FF_JWT_ISSUER}}" --api-secret="${{secrets.FF_JWT_SECRET}}" || true

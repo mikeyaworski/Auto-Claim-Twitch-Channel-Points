@@ -8,6 +8,7 @@ function log(...args) {
 }
 
 let lastPointsSummarySection;
+let lastClick = 0;
 
 // This list gets updated live and is a performant way to create new mutation observers
 const summaryClasses = document.getElementsByClassName('community-points-summary');
@@ -15,7 +16,12 @@ const summaryClasses = document.getElementsByClassName('community-points-summary
 function clickBonusButton() {
   if (!summaryClasses[0]) return;
   const bonusBtn = summaryClasses[0].querySelector('button[aria-label="Claim Bonus"]');
-  if (bonusBtn) bonusBtn.click();
+  // Add a 2 second delay between clicks
+  if (bonusBtn && Date.now() - lastClick > 2000) {
+    lastClick = Date.now();
+    log('Claiming bonus', bonusBtn);
+    bonusBtn.click();
+  }
 }
 
 function observeBonus() {

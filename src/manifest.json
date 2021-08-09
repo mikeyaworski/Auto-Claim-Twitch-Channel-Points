@@ -10,6 +10,12 @@
   },
   "content_scripts": [{
     "matches": ["https://*.twitch.tv/*"],
-    "js": ["content-script.js"]
-  }]
+    "js": ["main.js", "interval.js", "mutation-observer.js"]
+  }],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage"
+  ]
 }

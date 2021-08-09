@@ -1,0 +1,11 @@
+body {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  padding: 20px;
+}
+
+select {
+  outline: none;
+}

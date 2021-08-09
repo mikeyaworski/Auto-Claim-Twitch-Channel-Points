@@ -1,11 +1,4 @@
-// setInterval(() => {
-//   const element = document.querySelector('.community-points-summary > *:nth-child(2) button');
-//   if (element) element.click();
-// }, 1000);
-
-function log(...args) {
-  console.log('Auto Claim Twitch Channel Points:', ...args);
-}
+let observers = [];
 
 let lastPointsSummarySection;
 let lastClick = 0;
@@ -28,16 +21,31 @@ function observeBonus() {
   log('Creating mutation obvserver on points summary section', summaryClasses[0]);
   lastPointsSummarySection = summaryClasses[0];
   clickBonusButton();
-  new MutationObserver(() => {
-    clickBonusButton();
-  }).observe(summaryClasses[0], { childList: true, subtree: true });
+  observers.push(
+    new MutationObserver(() => {
+      clickBonusButton();
+    }).observe(summaryClasses[0], { childList: true, subtree: true }),
+  );
 }
 
-if (summaryClasses[0]) observeBonus();
 
-log('Created document mutation observer');
-new MutationObserver(() => {
-  if (summaryClasses[0] && summaryClasses[0] !== lastPointsSummarySection) {
-    observeBonus();
-  }
-}).observe(document.body, { subtree: true, childList: true });
+function createObservers() {
+  if (summaryClasses[0]) observeBonus();
+
+  log('Creating document mutation observer');
+  observers.push(
+    new MutationObserver(() => {
+      if (summaryClasses[0] && summaryClasses[0] !== lastPointsSummarySection) {
+        observeBonus();
+      }
+    }).observe(document.body, { subtree: true, childList: true }),
+  );
+}
+
+function teardownObservers() {
+  log('Clearing mutation observers', observers.length);
+  observers.forEach(observer => {
+    if (observer) observer.disconnect();
+  });
+  observers = [];
+}

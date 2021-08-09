@@ -1,7 +1,7 @@
 {
   "name": "Auto Claim Twitch Channel Points",
   "description": "Will automatically click the button for claiming channel points on Twitch.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "manifest_version": 2,
   "icons": {
     "16": "icon16.png",

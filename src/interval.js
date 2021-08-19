@@ -11,7 +11,7 @@ function createInterval() {
   intervalId = setInterval(() => {
     const element = document.querySelector('.community-points-summary > *:nth-child(2) button');
     if (element) {
-      log('Claiming bonus', bonusBtn);
+      log('Claiming bonus', element);
       element.click();
     }
   }, 1000);

@@ -3,6 +3,11 @@
   "description": "Will automatically click the button for claiming channel points on Twitch.",
   "version": "2.0.0",
   "manifest_version": 3,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}"
+    }
+  },
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",

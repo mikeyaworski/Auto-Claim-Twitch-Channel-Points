@@ -8,7 +8,7 @@ const summaryClasses = document.getElementsByClassName('community-points-summary
 
 function clickBonusButton() {
   if (!summaryClasses[0]) return;
-  const bonusBtn = summaryClasses[0].querySelector('button[aria-label="Claim Bonus"]');
+  const bonusBtn = getClaimBonusButton(summaryClasses[0]);
   // Add a 2 second delay between clicks
   if (bonusBtn && Date.now() - lastClick > 2000) {
     lastClick = Date.now();

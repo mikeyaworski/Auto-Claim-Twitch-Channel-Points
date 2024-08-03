@@ -9,10 +9,10 @@ function teardownInterval() {
 
 function createInterval() {
   intervalId = setInterval(() => {
-    const element = document.querySelector('.community-points-summary > *:nth-child(2) button');
-    if (element) {
-      log('Claiming bonus', element);
-      element.click();
+    const bonusBtn = getClaimBonusButton();
+    if (bonusBtn) {
+      log('Claiming bonus', bonusBtn);
+      bonusBtn.click();
     }
   }, 1000);
   log('Created interval', intervalId);

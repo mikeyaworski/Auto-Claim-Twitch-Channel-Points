@@ -2,6 +2,12 @@ function log(...args) {
   console.log('Auto Claim Twitch Channel Points:', ...args);
 }
 
+function getClaimBonusButton(parentElement = document) {
+  return parentElement.querySelector('.community-points-summary > *:nth-child(2) button')
+    // This selector only works for English
+    || parentElement.querySelector('.community-points-summary button[aria-label="Claim Bonus"]');
+}
+
 function restart(method) {
   if (method === 'interval') {
     teardownObservers();

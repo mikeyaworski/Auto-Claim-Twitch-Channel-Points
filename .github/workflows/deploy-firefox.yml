@@ -1,0 +1,22 @@
+name: Deploy Firefox
+on:
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+jobs:
+  deploy:
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    runs-on: ubuntu-latest
+    env:
+      FF_APP_ID: "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}"
+    steps:
+    - uses: actions/checkout@v4
+    - run: git archive -o package.zip HEAD:src
+    - uses: mikeyaworski/firefox-addon@master
+      with:
+        uuid: "${{ env.FF_APP_ID }}"
+        xpi: package.zip
+        manifest: src/manifest.json
+        api-key: ${{ secrets.FF_JWT_ISSUER }}
+        api-secret: ${{ secrets.FF_JWT_SECRET }}

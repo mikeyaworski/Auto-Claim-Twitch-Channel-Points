@@ -1,27 +1,22 @@
-name: Deploy
+name: Deploy Chrome
 on:
   push:
-    branches: [master]
+    branches:
+    - master
+  workflow_dispatch:
 jobs:
   deploy:
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
     env:
       CHROME_APP_ID: jfkamlikjbpcgjcdicpjaofammhfgjjh
-      FF_APP_ID: "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}"
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - run: git archive -o package.zip HEAD:src
-    - uses: trmcnvn/chrome-addon@v2
+    - uses: mikeyaworski/chrome-addon@master
       with:
         extension: ${{ env.CHROME_APP_ID }}
         zip: package.zip
         client-id: ${{ secrets.CHROME_CLIENT_ID }}
         client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
         refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-    - uses: trmcnvn/firefox-addon@v1
-      with:
-        uuid: "${{ env.FF_APP_ID }}"
-        xpi: package.zip
-        manifest: src/manifest.json
-        api-key: ${{ secrets.FF_JWT_ISSUER }}
-        api-secret: ${{ secrets.FF_JWT_SECRET }}

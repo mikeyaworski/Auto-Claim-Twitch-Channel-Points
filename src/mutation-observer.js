@@ -18,7 +18,7 @@ function clickBonusButton() {
 }
 
 function observeBonus() {
-  log('Creating mutation obvserver on points summary section', summaryClasses[0]);
+  log('Creating mutation observer on points summary section', summaryClasses[0]);
   lastPointsSummarySection = summaryClasses[0];
   clickBonusButton();
   const observer = new MutationObserver(() => {
@@ -27,7 +27,6 @@ function observeBonus() {
   observer.observe(summaryClasses[0], { childList: true, subtree: true });
   observers.push(observer);
 }
-
 
 function createObservers() {
   if (summaryClasses[0]) observeBonus();
